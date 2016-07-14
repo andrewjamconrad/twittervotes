@@ -48,16 +48,21 @@ func makeRequest(req *http.Request, params url.Values) (*http.Response, error) {
 	return httpClient.Do(req)
 }
 
+var configFilePath = "keys.json"
+
 func setupTwitterAuth() {
+
+	settings := loadKeys(configFilePath)
+
 	creds = &oauth.Credentials{
-		Token:  spTwitterAccessToken,
-		Secret: spTwitterAccessSecret,
+		Token:  settings.TwitterAccessToken,
+		Secret: settings.TwitterAccessSecret,
 	}
 
 	authClient = &oauth.Client{
 		Credentials: oauth.Credentials{
-			Token:  spTwitterKey,
-			Secret: spTwitterSecret,
+			Token:  settings.TwitterKey,
+			Secret: settings.TwitterSecret,
 		},
 	}
 }
